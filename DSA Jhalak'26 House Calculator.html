@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Calculator - Jhalak '26</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-100">
+
+    <!-- TOP BAR -->
+    <header class="w-full bg-white shadow flex items-center justify-between px-6 py-3">
+
+    <!-- LEFT: DSA LOGO + TEXT -->
+        <div class="flex items-center gap-3">
+            <img src="DSA.png" alt="DSA Logo" class="h-14">
+            <h1 class="text-3xl font-bold text-gray-800">Directorate of Student Affairs</h1>
+        </div>
+
+        <!-- RIGHT: SRM LOGO -->
+        <img src="SRM.png" alt="SRM Logo" class="h-14">
+    </header>
+
+
+
+    <!-- HERO SECTION -->
+    <section class="relative w-full h-80 bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white">
+        <h2 class="text-6xl font-extrabold drop-shadow-lg">JHALAK '26</h2>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="container mx-auto px-4 py-12 flex gap-8">
+
+        <!-- SIDEBAR WITH HOUSE LOGOS -->
+        <aside class="w-1/4 bg-white shadow-lg rounded-xl p-6 h-fit">
+            <h3 class="text-xl font-bold mb-4 text-gray-700 text-center">House Logos</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <img src="Aakash.jpg" class="h-16">
+                <img src="Astra.jpg" class="h-16">
+                <img src="Brahmos.png" class="h-16">
+                <img src="Agni.png" class="h-16">
+                <img src="Prithvi.png" class="h-16">
+                <img src="Trishul.jpg" class="h-16">
+                <img src="Nag.png" class="h-16">
+                <img src="Shaurya.png" class="h-16">
+            </div>
+        </aside>
+
+        <!-- HOUSE CALCULATOR -->
+        <div class="w-3/4 bg-white rounded-2xl shadow-xl p-8 -mt-40 relative z-10">
+
+            <div class="text-center mb-10">
+                <h2 class="text-4xl font-bold text-gray-900 mb-2">Find Your House</h2>
+            </div>
+
+            <!-- Department Selector -->
+            <div class="mb-6">
+                <label class="block text-gray-700 font-semibold mb-2">Select Department:</label>
+                <select id="departmentSelect" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <option value="">-- Choose Department --</option>
+                    <option value="et">Engineering & Technology (E&T)</option>
+                    <option value="law">Law</option>
+                    <option value="fsh">FSH</option>
+                    <option value="mba">MBA</option>
+                    <option value="bba">BBA</option>
+                    <option value="architecture">Architecture</option>
+                    <option value="hotel">Hotel Management</option>
+                    <option value="medical">Medical</option>
+                </select>
+            </div>
+
+            <!-- Registration Number Input -->
+            <div id="regInputSection" class="hidden mb-6">
+                <label class="block text-gray-700 font-semibold mb-2">Enter Registration Number:</label>
+                <input id="registrationNumber" type="text" placeholder="e.g., 2331242010001" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Button -->
+            <button id="calculateBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg">
+                Get My House
+            </button>
+
+            <!-- Result Section -->
+            <div id="resultSection" class="hidden mt-8 p-6 bg-gray-50 rounded-lg">
+                <h4 class="text-lg font-semibold text-gray-800 mb-4">Your Result:</h4>
+                <div id="resultContent"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const houses = {
+            "0": { name: "Trishul", color: "red", logo: "Trishul.jpg" },
+            "1": { name: "Agni", color: "yellow", logo: "Agni.png" },
+            "2": { name: "Aakash", color: "green", logo: "Aakash.jpg" },
+            "3": { name: "Prithvi", color: "purple", logo: "Prithvi.png" }
+        };
+
+        const departmentHouses = {
+            "law": { name: "Astra", color: "blue", logo: "Astra.jpg" },
+            "fsh": { name: "Astra", color: "blue", logo: "Astra.jpg" },
+            "mba": { name: "Brahmos", color: "yellow", logo: "Brahmos.png" },
+            "bba": { name: "Brahmos", color: "yellow", logo: "Brahmos.png" },
+            "architecture": { name: "Nag", color: "green", logo: "Nag.png" },
+            "hotel": { name: "Nag", color: "green", logo: "Nag.png" },
+            "medical": { name: "Shaurya", color: "red", logo: "Shaurya.png" }
+        };
+
+        const departmentSelect = document.getElementById("departmentSelect");
+        const regInputSection = document.getElementById("regInputSection");
+        const regInput = document.getElementById("registrationNumber");
+        const calculateBtn = document.getElementById("calculateBtn");
+        const resultSection = document.getElementById("resultSection");
+        const resultContent = document.getElementById("resultContent");
+
+        departmentSelect.addEventListener("change", () => {
+            regInputSection.classList.toggle("hidden", departmentSelect.value !== "et");
+        });
+
+        function calculateHouse(regNumber) {
+            const lastThree = regNumber.slice(-3);
+            const sum = parseInt(lastThree);
+            const remainder = sum % 4;
+            return houses[remainder];
+        }
+
+        function displayResult(house) {
+            const colors = {
+                red: "bg-red-100 border-red-400 text-red-800",
+                yellow: "bg-yellow-100 border-yellow-400 text-yellow-800",
+                green: "bg-green-100 border-green-400 text-green-800",
+                purple: "bg-purple-100 border-purple-400 text-purple-800",
+                blue: "bg-blue-100 border-blue-400 text-blue-800"
+            };
+
+            resultContent.innerHTML = `
+                <div class="p-6 border-2 rounded-lg text-center ${colors[house.color]}">
+                    <img src="${house.logo}" class="h-20 mx-auto mb-4">
+                    <h2 class="text-3xl font-bold">${house.name}</h2>
+                </div>
+            `;
+
+            resultSection.classList.remove("hidden");
+        }
+
+        calculateBtn.addEventListener("click", () => {
+            const dept = departmentSelect.value;
+            if (!dept) return alert("Please select a department");
+
+            if (dept === "et") {
+                const reg = regInput.value.trim();
+                if (reg.length < 3 || !/^[0-9]+$/.test(reg))
+                    return alert("Enter a valid numeric registration number");
+                displayResult(calculateHouse(reg));
+            } else {
+                displayResult(departmentHouses[dept]);
+            }
+        });
+    </script>
+
+</body>
+</html>
