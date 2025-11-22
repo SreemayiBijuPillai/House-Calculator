@@ -5,58 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>House Calculator - Jhalak '26</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Fix hero overlap for mobile */
+        @media (max-width: 640px) {
+            .hero-height {
+                height: 200px !important;
+            }
+            .hero-text {
+                font-size: 2.5rem !important;
+            }
+            .top-title {
+                font-size: 1.4rem !important;
+            }
+            .calc-card {
+                margin-top: -100px !important;
+                padding: 1.5rem !important;
+            }
+        }
+    </style>
 </head>
+
 <body class="min-h-screen bg-gray-100">
 
     <!-- TOP BAR -->
-    <header class="w-full bg-white shadow flex items-center justify-between px-6 py-3">
+    <header class="w-full bg-white shadow flex items-center justify-between px-4 sm:px-6 py-3">
 
-    <!-- LEFT: DSA LOGO + TEXT -->
+        <!-- LEFT: DSA LOGO + TEXT -->
         <div class="flex items-center gap-3">
-            <img src="DSA.png" alt="DSA Logo" class="h-14">
-            <h1 class="text-3xl font-bold text-gray-800">Directorate of Student Affairs</h1>
+            <img src="DSA.png" alt="DSA Logo" class="h-10 sm:h-14">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 top-title">Directorate of Student Affairs</h1>
         </div>
 
         <!-- RIGHT: SRM LOGO -->
-        <img src="SRM.png" alt="SRM Logo" class="h-14">
+        <img src="SRM.png" alt="SRM Logo" class="h-10 sm:h-14">
     </header>
 
 
 
     <!-- HERO SECTION -->
-    <section class="relative w-full h-80 bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white">
-        <h2 class="text-6xl font-extrabold drop-shadow-lg">JHALAK '26</h2>
+    <section class="relative w-full hero-height h-80 bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white">
+        <h2 class="hero-text text-5xl sm:text-6xl font-extrabold drop-shadow-lg">
+            JHALAK '26
+        </h2>
     </section>
 
     <!-- MAIN CONTENT -->
-    <main class="container mx-auto px-4 py-12 flex gap-8">
-
-        <!-- SIDEBAR WITH HOUSE LOGOS -->
-        <aside class="w-1/4 bg-white shadow-lg rounded-xl p-6 h-fit">
-            <h3 class="text-xl font-bold mb-4 text-gray-700 text-center">House Logos</h3>
-            <div class="grid grid-cols-2 gap-4">
-                <img src="Aakash.jpg" class="h-16">
-                <img src="Astra.jpg" class="h-16">
-                <img src="Brahmos.png" class="h-16">
-                <img src="Agni.png" class="h-16">
-                <img src="Prithvi.png" class="h-16">
-                <img src="Trishul.jpg" class="h-16">
-                <img src="Nag.png" class="h-16">
-                <img src="Shaurya.png" class="h-16">
-            </div>
-        </aside>
+    <main class="container mx-auto px-4 py-10 flex justify-center">
 
         <!-- HOUSE CALCULATOR -->
-        <div class="w-3/4 bg-white rounded-2xl shadow-xl p-8 -mt-40 relative z-10">
+        <div class="w-full md:w-2/3 lg:w-1/2 bg-white rounded-2xl shadow-xl p-8 calc-card -mt-32 sm:-mt-40 relative z-10">
 
             <div class="text-center mb-10">
-                <h2 class="text-4xl font-bold text-gray-900 mb-2">Find Your House</h2>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Find Your House</h2>
             </div>
 
             <!-- Department Selector -->
             <div class="mb-6">
-                <label class="block text-gray-700 font-semibold mb-2">Select Department:</label>
-                <select id="departmentSelect" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                <label class="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">Select Department:</label>
+                <select id="departmentSelect"
+                        class="w-full px-4 py-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
                     <option value="">-- Choose Department --</option>
                     <option value="et">Engineering & Technology (E&T)</option>
                     <option value="law">Law</option>
@@ -69,14 +77,17 @@
                 </select>
             </div>
 
-            <!-- Registration Number Input -->
+            <!-- Registration Input -->
             <div id="regInputSection" class="hidden mb-6">
-                <label class="block text-gray-700 font-semibold mb-2">Enter Registration Number:</label>
-                <input id="registrationNumber" type="text" placeholder="e.g., 2331242010001" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                <label class="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">Enter Registration Number:</label>
+                <input id="registrationNumber" type="text"
+                       placeholder="e.g., 2331242010001"
+                       class="w-full px-4 py-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
             </div>
 
             <!-- Button -->
-            <button id="calculateBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg">
+            <button id="calculateBtn"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg text-sm sm:text-base">
                 Get My House
             </button>
 
@@ -152,6 +163,7 @@
                 const reg = regInput.value.trim();
                 if (reg.length < 3 || !/^[0-9]+$/.test(reg))
                     return alert("Enter a valid numeric registration number");
+
                 displayResult(calculateHouse(reg));
             } else {
                 displayResult(departmentHouses[dept]);
