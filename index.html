@@ -20,13 +20,23 @@
             justify-content: center;
             z-index: 9999;
             opacity: 1;
-            transition: opacity 1.2s ease-out;
+            transition: opacity 0.8s ease-out; /* medium fade */
+            white-space: nowrap; /* ensure single line */
+            overflow: hidden;
+        }
+
+        #introScreen h1 {
+            font-size: 4rem;
+            color: white;
+            font-weight: 800;
+            letter-spacing: 3px;
+            white-space: nowrap; /* force single line */
         }
 
         /* Fade-in main content */
         #mainContent {
             opacity: 0;
-            transition: opacity 1.2s ease-out;
+            transition: opacity 0.8s ease-out; /* fade in */
         }
 
         /* Mobile Fix */
@@ -36,9 +46,11 @@
             }
             .hero-text {
                 font-size: 2.5rem !important;
+                white-space: nowrap; /* force single line */
             }
             .top-title {
                 font-size: 1.4rem !important;
+                white-space: nowrap; /* prevent wrapping */
             }
             .calc-card {
                 margin-top: -100px !important;
@@ -50,167 +62,161 @@
 
 <body class="bg-gray-100">
 
-    <!-- INTRO FADE SCREEN -->
-    <div id="introScreen">
-        <h1 style="font-size:4rem; color:white; font-weight:800; letter-spacing:3px;">
-            JHALAK '26
-        </h1>
-    </div>
+<!-- INTRO FADE SCREEN -->
+<div id="introScreen">
+    <h1>JHALAK '26</h1>
+</div>
 
-    <!-- MAIN CONTENT WRAPPER -->
-    <div id="mainContent">
+<!-- MAIN CONTENT WRAPPER -->
+<div id="mainContent">
 
-        <!-- TOP BAR -->
-        <header class="w-full bg-white shadow flex items-center justify-between px-4 sm:px-6 py-3">
+    <!-- TOP BAR -->
+    <header class="w-full bg-white shadow flex items-center justify-between px-4 sm:px-6 py-3">
 
-            <div class="flex items-center gap-3">
-                <img src="DSA.png" alt="DSA Logo" class="h-10 sm:h-14">
-                <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 top-title">Directorate of Student Affairs</h1>
+        <div class="flex items-center gap-3">
+            <img src="DSA.png" alt="DSA Logo" class="h-10 sm:h-14">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 top-title">Directorate of Student Affairs</h1>
+        </div>
+
+        <img src="SRM.png" alt="SRM Logo" class="h-10 sm:h-14">
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative w-full hero-height h-80 flex items-center justify-center text-white bg-cover bg-center bg-no-repeat"
+            style="background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('flag.jpg');">
+        <h2 class="hero-text text-5xl sm:text-6xl font-extrabold drop-shadow-lg">JHALAK '26</h2>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="container mx-auto px-4 py-10 flex justify-center">
+        <div class="w-full md:w-2/3 lg:w-1/2 bg-white rounded-2xl shadow-xl p-8 calc-card -mt-32 sm:-mt-40 relative z-10">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Find Your House</h2>
             </div>
 
-            <img src="SRM.png" alt="SRM Logo" class="h-10 sm:h-14">
-        </header>
-
-        <!-- HERO SECTION -->
-        <section class="relative w-full hero-height h-80 flex items-center justify-center text-white bg-cover bg-center bg-no-repeat"
-                style="background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('flag.jpg');">
-
-            <h2 class="hero-text text-5xl sm:text-6xl font-extrabold drop-shadow-lg">JHALAK '26</h2>
-        </section>
-
-        <!-- MAIN CONTENT -->
-        <main class="container mx-auto px-4 py-10 flex justify-center">
-            <div class="w-full md:w-2/3 lg:w-1/2 bg-white rounded-2xl shadow-xl p-8 calc-card -mt-32 sm:-mt-40 relative z-10">
-
-                <div class="text-center mb-10">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Find Your House</h2>
-                </div>
-
-                <!-- Department Selector -->
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">Select Department:</label>
-                    <select id="departmentSelect"
-                            class="w-full px-4 py-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
-                        <option value="">-- Choose Department --</option>
-                        <option value="et">Engineering & Technology (E&T)</option>
-                        <option value="law">Law</option>
-                        <option value="fsh">FSH</option>
-                        <option value="mba">MBA</option>
-                        <option value="bba">BBA</option>
-                        <option value="architecture">Architecture</option>
-                        <option value="hotel">Hotel Management</option>
-                        <option value="medical">Medical</option>
-                    </select>
-                </div>
-
-                <!-- Registration Input -->
-                <div id="regInputSection" class="hidden mb-6">
-                    <label class="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">Enter Registration Number:</label>
-                    <input id="registrationNumber" type="text"
-                           placeholder="e.g., 2331242010001"
-                           class="w-full px-4 py-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
-                </div>
-
-                <!-- Button -->
-                <button id="calculateBtn"
-                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg text-sm sm:text-base">
-                    Get My House
-                </button>
-
-                <!-- Result Section -->
-                <div id="resultSection" class="hidden mt-8 p-6 bg-gray-50 rounded-lg">
-                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Your Result:</h4>
-                    <div id="resultContent"></div>
-                </div>
-
+            <!-- Department Selector -->
+            <div class="mb-6">
+                <label class="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">Select Department:</label>
+                <select id="departmentSelect"
+                        class="w-full px-4 py-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
+                    <option value="">-- Choose Department --</option>
+                    <option value="et">Engineering & Technology (E&T)</option>
+                    <option value="law">Law</option>
+                    <option value="fsh">FSH</option>
+                    <option value="mba">MBA</option>
+                    <option value="bba">BBA</option>
+                    <option value="architecture">Architecture</option>
+                    <option value="hotel">Hotel Management</option>
+                    <option value="medical">Medical</option>
+                </select>
             </div>
-        </main>
-    </div>
 
-    <!-- SCRIPT -->
-    <script>
-        /* INTRO ANIMATION */
-        window.onload = () => {
+            <!-- Registration Input -->
+            <div id="regInputSection" class="hidden mb-6">
+                <label class="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">Enter Registration Number:</label>
+                <input id="registrationNumber" type="text"
+                       placeholder="e.g., 2331242010001"
+                       class="w-full px-4 py-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Button -->
+            <button id="calculateBtn"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg text-sm sm:text-base">
+                Get My House
+            </button>
+
+            <!-- Result Section -->
+            <div id="resultSection" class="hidden mt-8 p-6 bg-gray-50 rounded-lg">
+                <h4 class="text-lg font-semibold text-gray-800 mb-4">Your Result:</h4>
+                <div id="resultContent"></div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<!-- SCRIPT -->
+<script>
+    window.onload = () => {
+        setTimeout(() => {
+            document.getElementById("introScreen").style.opacity = 0;
+            document.getElementById("mainContent").style.opacity = 1;
+
             setTimeout(() => {
-                document.getElementById("introScreen").style.opacity = 0;
-                document.getElementById("mainContent").style.opacity = 1;
+                document.getElementById("introScreen").style.display = "none";
+            }, 800);
+        }, 1000);
+    };
 
-                setTimeout(() => {
-                    document.getElementById("introScreen").style.display = "none";
-                }, 1200);
-            }, 1800);
+    const houses = {
+        "0": { name: "Trishul", color: "red", logo: "Trishul.png" },
+        "1": { name: "Agni", color: "yellow", logo: "Agni.png" },
+        "2": { name: "Aakash", color: "green", logo: "Aakash.jpg" },
+        "3": { name: "Prithvi", color: "purple", logo: "Prithvi.png" }
+    };
+
+    const departmentHouses = {
+        "law": { name: "Astra", color: "blue", logo: "Astra.jpg" },
+        "fsh": { name: "Astra", color: "blue", logo: "Astra.jpg" },
+        "mba": { name: "Brahmos", color: "yellow", logo: "Brahmos.png" },
+        "bba": { name: "Brahmos", color: "yellow", logo: "Brahmos.png" },
+        "architecture": { name: "Nag", color: "green", logo: "Nag.png" },
+        "hotel": { name: "Nag", color: "green", logo: "Nag.png" },
+        "medical": { name: "Shaurya", color: "red", logo: "Shaurya.png" }
+    };
+
+    const departmentSelect = document.getElementById("departmentSelect");
+    const regInputSection = document.getElementById("regInputSection");
+    const regInput = document.getElementById("registrationNumber");
+    const calculateBtn = document.getElementById("calculateBtn");
+    const resultSection = document.getElementById("resultSection");
+    const resultContent = document.getElementById("resultContent");
+
+    departmentSelect.addEventListener("change", () => {
+        regInputSection.classList.toggle("hidden", departmentSelect.value !== "et");
+    });
+
+    function calculateHouse(regNumber) {
+        const lastThree = regNumber.slice(-3);
+        const sum = parseInt(lastThree);
+        const remainder = sum % 4;
+        return houses[remainder];
+    }
+
+    function displayResult(house) {
+        const colors = {
+            red: "bg-red-100 border-red-400 text-red-800",
+            yellow: "bg-yellow-100 border-yellow-400 text-yellow-800",
+            green: "bg-green-100 border-green-400 text-green-800",
+            purple: "bg-purple-100 border-purple-400 text-purple-800",
+            blue: "bg-blue-100 border-blue-400 text-blue-800"
         };
 
-        /* EXISTING JS */
-        const houses = {
-            "0": { name: "Trishul", color: "red", logo: "Trishul.png" },
-            "1": { name: "Agni", color: "yellow", logo: "Agni.png" },
-            "2": { name: "Aakash", color: "green", logo: "Aakash.jpg" },
-            "3": { name: "Prithvi", color: "purple", logo: "Prithvi.png" }
-        };
+        resultContent.innerHTML = `
+            <div class="p-6 border-2 rounded-lg text-center ${colors[house.color]}">
+                <img src="${house.logo}" class="h-20 mx-auto mb-4">
+                <h2 class="text-3xl font-bold">${house.name}</h2>
+            </div>
+        `;
 
-        const departmentHouses = {
-            "law": { name: "Astra", color: "blue", logo: "Astra.jpg" },
-            "fsh": { name: "Astra", color: "blue", logo: "Astra.jpg" },
-            "mba": { name: "Brahmos", color: "yellow", logo: "Brahmos.png" },
-            "bba": { name: "Brahmos", color: "yellow", logo: "Brahmos.png" },
-            "architecture": { name: "Nag", color: "green", logo: "Nag.png" },
-            "hotel": { name: "Nag", color: "green", logo: "Nag.png" },
-            "medical": { name: "Shaurya", color: "red", logo: "Shaurya.png" }
-        };
+        resultSection.classList.remove("hidden");
+    }
 
-        const departmentSelect = document.getElementById("departmentSelect");
-        const regInputSection = document.getElementById("regInputSection");
-        const regInput = document.getElementById("registrationNumber");
-        const calculateBtn = document.getElementById("calculateBtn");
-        const resultSection = document.getElementById("resultSection");
-        const resultContent = document.getElementById("resultContent");
+    calculateBtn.addEventListener("click", () => {
+        const dept = departmentSelect.value;
+        if (!dept) return alert("Please select a department");
 
-        departmentSelect.addEventListener("change", () => {
-            regInputSection.classList.toggle("hidden", departmentSelect.value !== "et");
-        });
+        if (dept === "et") {
+            const reg = regInput.value.trim();
+            if (reg.length < 3 || !/^[0-9]+$/.test(reg))
+                return alert("Enter a valid numeric registration number");
 
-        function calculateHouse(regNumber) {
-            const lastThree = regNumber.slice(-3);
-            const sum = parseInt(lastThree);
-            const remainder = sum % 4;
-            return houses[remainder];
+            displayResult(calculateHouse(reg));
+        } else {
+            displayResult(departmentHouses[dept]);
         }
-
-        function displayResult(house) {
-            const colors = {
-                red: "bg-red-100 border-red-400 text-red-800",
-                yellow: "bg-yellow-100 border-yellow-400 text-yellow-800",
-                green: "bg-green-100 border-green-400 text-green-800",
-                purple: "bg-purple-100 border-purple-400 text-purple-800",
-                blue: "bg-blue-100 border-blue-400 text-blue-800"
-            };
-
-            resultContent.innerHTML = `
-                <div class="p-6 border-2 rounded-lg text-center ${colors[house.color]}">
-                    <img src="${house.logo}" class="h-20 mx-auto mb-4">
-                    <h2 class="text-3xl font-bold">${house.name}</h2>
-                </div>
-            `;
-
-            resultSection.classList.remove("hidden");
-        }
-
-        calculateBtn.addEventListener("click", () => {
-            const dept = departmentSelect.value;
-            if (!dept) return alert("Please select a department");
-
-            if (dept === "et") {
-                const reg = regInput.value.trim();
-                if (reg.length < 3 || !/^[0-9]+$/.test(reg))
-                    return alert("Enter a valid numeric registration number");
-
-                displayResult(calculateHouse(reg));
-            } else {
-                displayResult(departmentHouses[dept]);
-            }
-        });
-    </script>
+    });
+</script>
 
 </body>
 </html>
