@@ -1,103 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>House Calculator - Jhalak '26</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House Calculator - Jhalak '26</title>
+<script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-        /* INTRO SCREEN */
-        #introScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.8s ease-out;
-            padding: 0 1rem; /* prevent overflow on tiny screens */
-        }
+<style>
+    /* INTRO SCREEN */
+    #introScreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.8s ease-out; /* medium fade */
+        white-space: nowrap; /* ensure single line */
+        overflow: hidden;
+    }
 
-        .intro-text {
-            font-weight: 800;
-            color: white;
-            letter-spacing: 3px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-align: center;
-            font-size: 2.5rem;
-        }
+    #introScreen h1 {
+        color: white;
+        font-weight: 800;
+        letter-spacing: 3px;
+        white-space: nowrap; /* force single line */
+        font-size: clamp(2rem, 10vw, 6rem); /* responsive font size */
+    }
 
-        /* Fade-in main content */
-        #mainContent {
-            opacity: 0;
-            transition: opacity 0.8s ease-out; /* fade in */
-        }
+    /* Fade-in main content */
+    #mainContent {
+        opacity: 0;
+        transition: opacity 0.8s ease-out; /* fade in */
+    }
 
-        /* HERO AND TOP TITLE RESPONSIVE FIX */
-        @media (max-width: 640px) {
-            .hero-height {
-                height: 200px !important;
-            }
-            .hero-text {
-                font-size: 2rem !important;
-                white-space: nowrap; /* force single line */
-            }
-            .top-title {
-                font-size: 1.25rem !important;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            .calc-card {
-                margin-top: -100px !important;
-                padding: 1.5rem !important;
-            }
+    /* HERO SECTION TEXT */
+    .hero-text {
+        font-size: clamp(2rem, 8vw, 6rem); /* auto adjust */
+        white-space: nowrap;
+    }
+
+    /* HEADER TITLE */
+    .top-title {
+        font-size: clamp(1rem, 4vw, 2rem); /* auto adjust */
+        white-space: nowrap; /* prevent wrapping */
+    }
+
+    /* Mobile Fixes */
+    @media (max-width: 640px) {
+        .hero-height {
+            height: 200px !important;
         }
-    </style>
+        .calc-card {
+            margin-top: -100px !important;
+            padding: 1.5rem !important;
+        }
+    }
+</style>
 </head>
 
 <body class="bg-gray-100">
 
 <!-- INTRO FADE SCREEN -->
 <div id="introScreen">
-    <h1 class="intro-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
-        JHALAK '26
-    </h1>
+    <h1>JHALAK '26</h1>
 </div>
 
 <!-- MAIN CONTENT WRAPPER -->
 <div id="mainContent">
 
     <!-- TOP BAR -->
-    <header class="w-full bg-white shadow flex items-center justify-between px-4 sm:px-6 py-3 flex-nowrap">
-        <div class="flex items-center gap-3 flex-nowrap">
-            <img src="DSA.png" alt="DSA Logo" class="h-10 sm:h-14 flex-shrink-0">
-            <h1 class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 top-title truncate">
-                Directorate of Student Affairs
-            </h1>
+    <header class="w-full bg-white shadow flex items-center justify-between px-4 sm:px-6 py-3">
+        <div class="flex items-center gap-3">
+            <img src="DSA.png" alt="DSA Logo" class="h-10 sm:h-14">
+            <h1 class="font-bold text-gray-800 top-title">Directorate of Student Affairs</h1>
         </div>
-
-        <img src="SRM.png" alt="SRM Logo" class="h-10 sm:h-14 flex-shrink-0">
+        <img src="SRM.png" alt="SRM Logo" class="h-10 sm:h-14">
     </header>
 
     <!-- HERO SECTION -->
     <section class="relative w-full hero-height h-80 flex items-center justify-center text-white bg-cover bg-center bg-no-repeat"
             style="background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('flag.jpg');">
-        <h2 class="hero-text text-5xl sm:text-6xl font-extrabold drop-shadow-lg">JHALAK '26</h2>
+        <h2 class="hero-text font-extrabold drop-shadow-lg">JHALAK '26</h2>
     </section>
 
     <!-- MAIN CONTENT -->
     <main class="container mx-auto px-4 py-10 flex justify-center">
         <div class="w-full md:w-2/3 lg:w-1/2 bg-white rounded-2xl shadow-xl p-8 calc-card -mt-32 sm:-mt-40 relative z-10">
-
             <div class="text-center mb-10">
                 <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Find Your House</h2>
             </div>
