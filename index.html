@@ -1,249 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>House Calculator - Jhalak '26</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Intro Screen */
-    #introScreen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: black;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      opacity: 1;
-      transition: opacity 1.2s ease-out;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Calculator - Jhalak '26</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    #mainContent {
-      opacity: 0;
-      transition: opacity 1s ease-out;
-    }
+    <style>
+        /* INTRO SCREEN */
+        #introScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.2s ease-out;
+        }
 
-    /* Hover Animations */
-    .house-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
+        /* Fade-in main content */
+        #mainContent {
+            opacity: 0;
+            transition: opacity 1.2s ease-out;
+        }
 
-    /* Hero Section Heights */
-    .hero-height { height: 80vh; }
-
-    /* Mobile Fixes */
-    @media (max-width: 640px) {
-      .hero-height { height: 50vh !important; }
-      .hero-text { font-size: 2.5rem !important; }
-      .top-title { font-size: 1.4rem !important; }
-      .calc-card { margin-top: -10px !important; padding: 1.5rem !important; }
-    }
-  </style>
+        /* Mobile Fix */
+        @media (max-width: 640px) {
+            .hero-height { height: 200px !important; }
+            .hero-text { font-size: 2.5rem !important; }
+            .top-title { font-size: 1.4rem !important; }
+            .calc-card { margin-top: -10px !important; padding: 1.5rem !important; }
+            .hidden-house-card { text-align: center !important; width: 40% !important; }
+        }
+    </style>
 </head>
+
 <body class="bg-gray-100">
 
-  <!-- Intro Screen -->
-  <div id="introScreen">
-    <h1 class="text-white font-extrabold text-6xl sm:text-7xl md:text-8xl drop-shadow-lg">Jhalak'26</h1>
-  </div>
+    <!-- INTRO SCREEN -->
+    <div id="introScreen">
+        <h1 style="font-size:4rem; color:white; font-weight:800; letter-spacing:3px;">
+            JHALAK '26
+        </h1>
+    </div>
 
-  <!-- Main Content -->
-  <div id="mainContent">
+    <!-- MAIN CONTENT -->
+    <div id="mainContent">
 
-    <!-- Header -->
-    <header class="w-full bg-white shadow flex flex-col sm:flex-row items-center justify-between px-4 sm:px-8 py-4 gap-3 sm:gap-0">
-      <div class="flex items-center gap-3">
-        <img src="DSA.png" alt="DSA Logo" class="h-12 sm:h-16 object-contain" onerror="this.style.display='none'">
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 top-title text-center">Directorate of Student Affairs</h1>
-      </div>
-      <img src="SRM.png" alt="SRM Logo" class="h-12 sm:h-16 object-contain" onerror="this.style.display='none'">
-    </header>
+        <!-- TOP BAR -->
+        <header class="w-full bg-white shadow flex items-center justify-between px-4 sm:px-6 py-3">
+            <div class="flex items-center gap-3">
+                <img src="DSA.png" alt="DSA Logo" class="h-10 sm:h-14">
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 top-title">Directorate of Student Affairs</h1>
+            </div>
+            <img src="SRM.png" alt="SRM Logo" class="h-10 sm:h-14">
+        </header>
 
-    <!-- HERO SECTION -->
-    <section class="relative w-full hero-height flex items-center justify-center text-white
+        <!-- HERO SECTION -->
+        <section class="relative w-full hero-height h-80 flex items-center justify-center text-white
             bg-cover bg-center bg-no-repeat"
             style="background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('flag.jpg');">
-      <h2 class="hero-text text-5xl sm:text-6xl md:text-7xl font-extrabold drop-shadow-lg">JHALAK '26</h2>
-    </section>
+            <h2 class="hero-text text-5xl sm:text-6xl font-extrabold drop-shadow-lg">JHALAK '26</h2>
+        </section>
 
-    <!-- Houses Display -->
-    <div class="max-w-6xl mx-auto px-4 py-10">
-      <h2 class="text-2xl sm:text-3xl font-bold text-center mb-6">Houses</h2>
-      <div id="housesContainer" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Houses populated via JS -->
-      </div>
+        <!-- MAIN CONTENT -->
+        <main class="container mx-auto px-4 py-10 flex flex-col items-center">
+
+            <!-- All Houses Display (Single Row) -->
+            <div class="w-full flex flex-wrap justify-center gap-6 mb-10">
+                <div id="hiddenHousesContainer" class="flex flex-wrap justify-center gap-6"></div>
+            </div>
+
+            <!-- Calculator Card -->
+            <div class="w-full md:w-2/3 lg:w-1/2 bg-white rounded-2xl shadow-xl p-8 calc-card relative z-10">
+
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Find Your House</h2>
+                </div>
+
+                <!-- Program Selector -->
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
+                        Select Program:
+                    </label>
+                    <select id="programSelect"
+                        class="w-full px-4 py-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
+                        <option value="">-- Choose Program --</option>
+                        <option value="ug">UG</option>
+                        <option value="pg">PG</option>
+                    </select>
+                </div>
+
+                <!-- UG Registration Input -->
+                <div id="regInputSection" class="hidden mb-6">
+                    <label class="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
+                        Enter Registration Number (UG Engineering & Technology Only):
+                    </label>
+                    <input id="registrationNumber" type="text"
+                        placeholder="Enter last 3 digits of your Registration Number"
+                        class="w-full px-4 py-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <!-- Button -->
+                <button id="calculateBtn"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg text-sm sm:text-base">
+                    Get My House
+                </button>
+
+                <!-- Result Section -->
+                <div id="resultSection" class="hidden mt-8 p-6 bg-gray-50 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Your House:</h4>
+                    <div id="resultContent"></div>
+                </div>
+            </div>
+
+        </main>
     </div>
 
-    <!-- Calculator Card -->
-    <div class="max-w-2xl mx-auto px-4 pb-12">
-      <div class="bg-white shadow-xl rounded-2xl p-8 calc-card">
+    <!-- SCRIPT -->
+    <script>
+        /* INTRO ANIMATION */
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById("introScreen").style.opacity = 0;
+                document.getElementById("mainContent").style.opacity = 1;
+                setTimeout(() => {
+                    document.getElementById("introScreen").style.display = "none";
+                }, 1200);
+            }, 1800);
+        };
 
-        <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">House Calculator</h2>
-        <p class="text-center text-lg text-gray-600 mb-6">Find out which house you belong to</p>
+        /* Houses Logic */
+        const houses = {
+            "0": { name: "Trishul", color: "gray", logo: "Trishul.png" },
+            "1": { name: "Agni", color: "gray", logo: "Agni.png" },
+            "2": { name: "Aakash", color: "gray", logo: "Aakash.jpg" },
+            "3": { name: "Prithvi", color: "gray", logo: "Prithvi.png" }
+        };
+        const pgHouse = { name: "Brahmos", color: "gray", logo: "Brahmos.png" };
 
-        <!-- Program Selector -->
-        <div class="mb-6 flex flex-col items-center space-y-3">
-          <label for="programSelect" class="text-lg font-semibold">Choose Program</label>
-          <select id="programSelect" class="text-lg max-w-md w-full px-4 py-2 border rounded-lg">
-            <option value="">-- Select Program --</option>
-            <option value="UG">UG</option>
-            <option value="PG">PG</option>
-          </select>
-        </div>
+        // Updated departments for all houses
+        const allHouses = [
+            // --- Engineering & Technology Houses First ---
+            { house: "Agni", color: "gray", logo: "Agni.png", departments: "Engineering and Technology" },
+            { house: "Trishul", color: "gray", logo: "Trishul.png", departments: "Engineering and Technology" },
+            { house: "Aakash", color: "gray", logo: "Aakash.jpg", departments: "Engineering and Technology" },
+            { house: "Prithvi", color: "gray", logo: "Prithvi.png", departments: "Engineering and Technology" },
+            { house: "Astra", color: "gray", logo: "Astra.jpg", departments: "School of Law\nFaculty of Science and Humanities" },
+            { house: "Shaurya", color: "gray", logo: "Shaurya.png", departments: "Medical and Health Sciences" },
+            { house: "Brahmos", color: "gray", logo: "Brahmos.png", departments: "Faculty of Management\nAll PG courses" },
+            { house: "Nag", color: "gray", logo: "Nag.png", departments: "School of Architecture and Interior Design\nInstitute of Hotel Management" }
+        ];
 
-        <!-- UG Registration Input -->
-        <div id="regInputSection" class="hidden mb-6 flex flex-col items-center space-y-3">
-          <label for="regNumber" class="text-lg font-semibold">Enter Last 3 Digits of Registration Number</label>
-          <input id="regNumber" type="number" min="0" max="999" placeholder="e.g., 123"
-            class="text-lg max-w-md w-full text-center px-4 py-2 border rounded-lg">
-          <p id="errorMsg" class="text-red-600 text-sm hidden"></p>
-        </div>
+        const programSelect = document.getElementById("programSelect");
+        const regInputSection = document.getElementById("regInputSection");
+        const regInput = document.getElementById("registrationNumber");
+        const calculateBtn = document.getElementById("calculateBtn");
+        const resultSection = document.getElementById("resultSection");
+        const resultContent = document.getElementById("resultContent");
+        const hiddenHousesContainer = document.getElementById("hiddenHousesContainer");
 
-        <!-- Calculate Button -->
-        <div class="flex justify-center">
-          <button id="calculateBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg text-lg">
-            Get Your House
-          </button>
-        </div>
+        /* Show/hide registration input based on program */
+        programSelect.addEventListener("change", () => {
+            if (programSelect.value === "ug") {
+                regInputSection.classList.remove("hidden");
+            } else {
+                regInputSection.classList.add("hidden");
+            }
+        });
 
-        <!-- Result -->
-        <div id="resultSection" class="hidden mt-6">
-          <div id="resultCard" class="border-2 rounded-xl p-8 text-center shadow-2xl">
-            <img id="resultLogo" class="w-40 h-40 object-contain mx-auto mb-4" src="" alt="House Logo">
-            <p id="resultName" class="text-5xl font-bold text-primary"></p>
-          </div>
-          <button id="resetBtn" class="mt-4 w-full py-3 border rounded-lg text-lg font-semibold hover:bg-gray-100">
-            Calculate Again
-          </button>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    // Intro Animation
-    window.onload = () => {
-      setTimeout(() => {
-        document.getElementById('introScreen').style.opacity = 0;
-        document.getElementById('mainContent').style.opacity = 1;
-        setTimeout(() => {
-          document.getElementById('introScreen').style.display = 'none';
-        }, 1200);
-      }, 1500);
-    };
-
-    // House Data
-    const houses = [
-      { name: 'Trishul', color: 'bg-red-500', logo: 'Trishul.png', description: ['Engineering and Technology'] },
-      { name: 'Agni', color: 'bg-blue-500', logo: 'Agni.png', description: ['Engineering and Technology'] },
-      { name: 'Aakash', color: 'bg-green-500', logo: 'Aakash.jpg', description: ['Engineering and Technology'] },
-      { name: 'Prithvi', color: 'bg-indigo-500', logo: 'Prithvi.png', description: ['Engineering and Technology'] },
-      { name: 'Brahmos', color: 'bg-purple-500', logo: 'Brahmos.png', description: ['Faculty of Management', 'All PG courses'] },
-      { name: 'Astra', color: 'bg-yellow-500', logo: 'Astra.jpg', description: ['School of Law', 'Faculty of Science and Humanities'] },
-      { name: 'Nag', color: 'bg-orange-500', logo: 'Nag.png', description: ['School of Architecture and Interior Design', 'Institute of Hotel Management'] },
-      { name: 'Shaurya', color: 'bg-pink-500', logo: 'Shaurya.png', description: ['Medical and Health Sciences'] },
-    ];
-
-    const housesContainer = document.getElementById('housesContainer');
-
-    // Render all houses with images
-    houses.forEach(h => {
-  const card = document.createElement('div');
-  card.className = `house-card overflow-hidden rounded-xl shadow-md transition-all duration-300`;
-  card.innerHTML = `
-    <div class="bg-gray h-3"></div>
-    <img src="${h.logo}" alt="${h.name} Logo" class="w-full h-40 object-contain mx-auto mt-2">
-    <div class="p-4">
-      <h3 class="text-xl font-bold mb-2">${h.name}</h3>
-      <ul class="text-sm text-gray-600 space-y-1">
-        ${h.description.map(d => `<li>• ${d}</li>`).join('')}
-      </ul>
-    </div>
-  `;
-  housesContainer.appendChild(card);
-});
-
-    // Calculator Logic
-    const programSelect = document.getElementById('programSelect');
-    const regInputSection = document.getElementById('regInputSection');
-    const regInput = document.getElementById('regNumber');
-    const calculateBtn = document.getElementById('calculateBtn');
-    const resultSection = document.getElementById('resultSection');
-    const resultLogo = document.getElementById('resultLogo');
-    const resultName = document.getElementById('resultName');
-    const resetBtn = document.getElementById('resetBtn');
-    const errorMsg = document.getElementById('errorMsg');
-
-    let assignedHouse = null;
-
-    programSelect.addEventListener('change', () => {
-      // Clear previous results
-      resultSection.classList.add('hidden');
-      assignedHouse = null;
-      regInput.value = '';
-      errorMsg.classList.add('hidden');
-
-      if (programSelect.value === 'UG') {
-        regInputSection.classList.remove('hidden');
-      } else if (programSelect.value === 'PG') {
-        regInputSection.classList.add('hidden');
-      } else {
-        regInputSection.classList.add('hidden');
-      }
-    });
-
-    function calculateHouse(number) {
-      const digits = number.split('').map(Number);
-      const sum = digits.reduce((a,b) => a+b, 0);
-      const remainder = sum % 4;
-      const ugHouses = ['Trishul', 'Agni', 'Aakash', 'Prithvi'];
-      return houses.find(h => h.name === ugHouses[remainder]);
-    }
-
-    function showResult(house) {
-      resultLogo.src = house.logo;
-      resultName.textContent = house.name;
-      resultSection.classList.remove('hidden');
-    }
-
-    calculateBtn.addEventListener('click', () => {
-      errorMsg.classList.add('hidden');
-
-      if (programSelect.value === '') {
-        alert('Please select a program');
-        return;
-      }
-
-      if (programSelect.value === 'UG') {
-        const reg = regInput.value.trim();
-        if (reg.length !== 3 || !/^\d+$/.test(reg)) {
-          errorMsg.textContent = 'Please enter exactly 3 digits';
-          errorMsg.classList.remove('hidden');
-          return;
+        /* UG Calculation */
+        function calculateHouse(regNumber) {
+            const lastThree = regNumber.slice(-3);
+            let sum = 0;
+            for (let digit of lastThree) sum += parseInt(digit);
+            const remainder = sum % 4;
+            return houses[remainder];
         }
-        assignedHouse = calculateHouse(reg);
-      } else if (programSelect.value === 'PG') {
-        assignedHouse = houses.find(h => h.name === 'Brahmos');
-      }
 
-      if (assignedHouse) {
-        showResult(assignedHouse);
-      }
-    });
+        /* Display Result */
+        function displayResult(house) {
+            const grayColor = "bg-gray-100 border-gray-400 text-gray-800"; // gray for all
+            resultContent.innerHTML = `
+                <div class="p-6 border-2 rounded-lg text-center ${grayColor}">
+                    <img src="${house.logo}" class="h-20 mx-auto mb-4">
+                    <h2 class="text-3xl font-bold">${house.name}</h2>
+                </div>
+            `;
+            resultSection.classList.remove("hidden");
+        }
 
-    resetBtn.addEventListener('click', () => {
-      programSelect.value = '';
-      regInput.value = '';
-      regInputSection.classList.add('hidden');
-      resultSection.classList.add('hidden');
-      assignedHouse = null;
-    });
-  </script>
+        /* Main button logic */
+        calculateBtn.addEventListener("click", () => {
+            const program = programSelect.value;
+            if (!program) return alert("Please select program (UG/PG)");
+
+            if (program === "pg") return displayResult(pgHouse);
+
+            const reg = regInput.value.trim();
+            if (reg.length < 3 || !/^[0-9]+$/.test(reg)) {
+                return alert("Enter a valid numeric registration number");
+            }
+            displayResult(calculateHouse(reg));
+        });
+
+        /* Render all house cards in gray */
+        allHouses.forEach(h => {
+            const grayColor = "bg-gray-100 border-gray-400 text-gray-800";
+            const card = document.createElement("div");
+            card.className = `hidden-house-card p-4 border-2 rounded-lg ${grayColor} flex flex-col items-center w-40`;
+            card.innerHTML = `
+                <img src="${h.logo}" class="h-16 mb-2">
+                <h3 class="font-bold text-lg text-center">${h.house}</h3>
+                <p class="text-sm text-center mt-1 whitespace-pre-line">${h.departments}</p>
+            `;
+            hiddenHousesContainer.appendChild(card);
+        });
+    </script>
 
 </body>
 </html>
