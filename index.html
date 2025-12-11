@@ -31,8 +31,34 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.25);
     }
 
-    /* Hero Section Heights */
-    .hero-height { height: 60vh; }
+    /* ⭐ HERO SECTION RESPONSIVE HEIGHTS ⭐ */
+
+    /* Laptops & Desktops */
+    .hero-height { 
+      height: 60vh; 
+    }
+
+    /* Tablets */
+    @media (max-width: 1024px) {
+      .hero-height { 
+        height: 50vh !important; 
+      }
+    }
+
+    /* Phones */
+    @media (max-width: 640px) {
+      .hero-height { 
+        height: 45vh !important; 
+      }
+    }
+
+    /* Extra small phones */
+    @media (max-width: 350px) {
+      .hero-height { 
+        height: 50vh !important; 
+      }
+      .hero-text { font-size: 1.9rem !important; }
+    }
 
     /* Hero Text Sizes & Styles */
     .hero-text {
@@ -46,15 +72,15 @@
 
     /* Mobile Fixes */
     @media (max-width: 640px) {
-      .hero-height { height: 40vh !important; }
-      .hero-text { font-size: 2.2rem !important; }
       .top-title { font-size: 1.4rem !important; }
       .calc-card { margin-top: -10px !important; padding: 1.5rem !important; }
 
-      /* FIX HERO BACKGROUND FULLY VISIBLE ON MOBILE */
+      /* Keep hero image fully visible */
       .hero-mobile-fix {
         background-size: 100% 100% !important;
       }
+
+      .hero-text { font-size: 2.2rem !important; }
     }
   </style>
 </head>
@@ -77,7 +103,7 @@
       <img src="SRM.png" alt="SRM Logo" class="h-12 sm:h-16 object-contain" onerror="this.style.display='none'">
     </header>
 
-    <!-- HERO SECTION -->
+    <!-- ⭐ HERO SECTION (PERFECTLY RESPONSIVE) ⭐ -->
     <section class="relative w-full hero-height flex items-center justify-center text-white
             bg-cover bg-center bg-no-repeat hero-mobile-fix"
             style="background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('flag.jpg');">
@@ -87,9 +113,7 @@
     <!-- Houses Display -->
     <div class="max-w-6xl mx-auto px-4 py-10">
       <h2 class="text-2xl sm:text-3xl font-bold text-center mb-6">Houses</h2>
-      <div id="housesContainer" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Houses populated via JS -->
-      </div>
+      <div id="housesContainer" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </div>
 
     <!-- Calculator Card -->
@@ -154,32 +178,30 @@
 
     // House Data
     const houses = [
-      { name: 'Trishul', color: 'bg-red-500', logo: 'Trishul.png', description: ['Engineering and Technology'] },
-      { name: 'Agni', color: 'bg-blue-500', logo: 'Agni.png', description: ['Engineering and Technology'] },
-      { name: 'Aakash', color: 'bg-green-500', logo: 'Aakash.jpg', description: ['Engineering and Technology'] },
-      { name: 'Prithvi', color: 'bg-indigo-500', logo: 'Prithvi.png', description: ['Engineering and Technology'] },
-      { name: 'Brahmos', color: 'bg-purple-500', logo: 'Brahmos.png', description: ['Faculty of Management', 'All PG courses'] },
-      { name: 'Astra', color: 'bg-yellow-500', logo: 'Astra.jpg', description: ['School of Law', 'Faculty of Science and Humanities'] },
-      { name: 'Nag', color: 'bg-orange-500', logo: 'Nag.png', description: ['School of Architecture and Interior Design', 'Institute of Hotel Management'] },
-      { name: 'Shaurya', color: 'bg-pink-500', logo: 'Shaurya.png', description: ['Medical and Health Sciences'] },
+      { name: 'Trishul', logo: 'Trishul.png', description: ['Engineering and Technology'] },
+      { name: 'Agni', logo: 'Agni.png', description: ['Engineering and Technology'] },
+      { name: 'Aakash', logo: 'Aakash.jpg', description: ['Engineering and Technology'] },
+      { name: 'Prithvi', logo: 'Prithvi.png', description: ['Engineering and Technology'] },
+      { name: 'Brahmos', logo: 'Brahmos.png', description: ['Faculty of Management', 'All PG courses'] },
+      { name: 'Astra', logo: 'Astra.jpg', description: ['School of Law', 'Faculty of Science and Humanities'] },
+      { name: 'Nag', logo: 'Nag.png', description: ['School of Architecture and Interior Design', 'Institute of Hotel Management'] },
+      { name: 'Shaurya', logo: 'Shaurya.png', description: ['Medical and Health Sciences'] },
     ];
 
     const housesContainer = document.getElementById('housesContainer');
 
-    // Render all houses
     houses.forEach(h => {
       const card = document.createElement('div');
       card.className = `house-card overflow-hidden rounded-xl shadow-md transition-all duration-300`;
       card.innerHTML = `
         <div class="bg-gray h-3"></div>
-        <img src="${h.logo}" alt="${h.name} Logo" class="w-full h-40 object-contain mx-auto mt-2">
+        <img src="${h.logo}" class="w-full h-40 object-contain mx-auto mt-2">
         <div class="p-4">
           <h3 class="text-xl font-bold mb-2">${h.name}</h3>
           <ul class="text-sm text-gray-600 space-y-1">
             ${h.description.map(d => `<li>• ${d}</li>`).join('')}
           </ul>
-        </div>
-      `;
+        </div>`;
       housesContainer.appendChild(card);
     });
 
@@ -202,34 +224,20 @@
       regInput.value = '';
       errorMsg.classList.add('hidden');
 
-      if (programSelect.value === 'UG') {
-        regInputSection.classList.remove('hidden');
-      } else {
-        regInputSection.classList.add('hidden');
-      }
+      regInputSection.classList.toggle('hidden', programSelect.value !== 'UG');
     });
 
     function calculateHouse(number) {
       const digits = number.split('').map(Number);
       const sum = digits.reduce((a,b) => a+b, 0);
-      const remainder = sum % 4;
       const ugHouses = ['Trishul', 'Agni', 'Aakash', 'Prithvi'];
-      return houses.find(h => h.name === ugHouses[remainder]);
-    }
-
-    function showResult(house) {
-      resultLogo.src = house.logo;
-      resultName.textContent = house.name;
-      resultSection.classList.remove('hidden');
+      return houses.find(h => h.name === ugHouses[sum % 4]);
     }
 
     calculateBtn.addEventListener('click', () => {
       errorMsg.classList.add('hidden');
 
-      if (programSelect.value === '') {
-        alert('Please select a program');
-        return;
-      }
+      if (!programSelect.value) return alert('Please select a program');
 
       if (programSelect.value === 'UG') {
         const reg = regInput.value.trim();
@@ -239,12 +247,14 @@
           return;
         }
         assignedHouse = calculateHouse(reg);
-      } else if (programSelect.value === 'PG') {
+      } else {
         assignedHouse = houses.find(h => h.name === 'Brahmos');
       }
 
       if (assignedHouse) {
-        showResult(assignedHouse);
+        resultLogo.src = assignedHouse.logo;
+        resultName.textContent = assignedHouse.name;
+        resultSection.classList.remove('hidden');
       }
     });
 
@@ -253,7 +263,6 @@
       regInput.value = '';
       regInputSection.classList.add('hidden');
       resultSection.classList.add('hidden');
-      assignedHouse = null;
     });
   </script>
 
