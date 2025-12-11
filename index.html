@@ -50,6 +50,11 @@
       .hero-text { font-size: 2.2rem !important; }
       .top-title { font-size: 1.4rem !important; }
       .calc-card { margin-top: -10px !important; padding: 1.5rem !important; }
+
+      /* FIX HERO BACKGROUND FULLY VISIBLE ON MOBILE */
+      .hero-mobile-fix {
+        background-size: 100% 100% !important;
+      }
     }
   </style>
 </head>
@@ -74,7 +79,7 @@
 
     <!-- HERO SECTION -->
     <section class="relative w-full hero-height flex items-center justify-center text-white
-            bg-contain bg-center bg-no-repeat"
+            bg-cover bg-center bg-no-repeat hero-mobile-fix"
             style="background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('flag.jpg');">
       <h2 class="hero-text font-extrabold drop-shadow-lg">JHALAK '26</h2>
     </section>
@@ -161,7 +166,7 @@
 
     const housesContainer = document.getElementById('housesContainer');
 
-    // Render all houses with images
+    // Render all houses
     houses.forEach(h => {
       const card = document.createElement('div');
       card.className = `house-card overflow-hidden rounded-xl shadow-md transition-all duration-300`;
@@ -192,7 +197,6 @@
     let assignedHouse = null;
 
     programSelect.addEventListener('change', () => {
-      // Clear previous results
       resultSection.classList.add('hidden');
       assignedHouse = null;
       regInput.value = '';
