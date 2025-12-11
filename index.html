@@ -28,16 +28,26 @@
     /* Hover Animations */
     .house-card:hover {
       transform: scale(1.05);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
     }
 
     /* Hero Section Heights */
-    .hero-height { height: 80vh; }
+    .hero-height { height: 60vh; }
+
+    /* Hero Text Sizes & Styles */
+    .hero-text {
+      font-size: 4rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-text { font-size: 3.5rem; }
+    }
 
     /* Mobile Fixes */
     @media (max-width: 640px) {
-      .hero-height { height: 50vh !important; }
-      .hero-text { font-size: 2.5rem !important; }
+      .hero-height { height: 40vh !important; }
+      .hero-text { font-size: 2.2rem !important; }
       .top-title { font-size: 1.4rem !important; }
       .calc-card { margin-top: -10px !important; padding: 1.5rem !important; }
     }
@@ -66,7 +76,7 @@
     <section class="relative w-full hero-height flex items-center justify-center text-white
             bg-cover bg-center bg-no-repeat"
             style="background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('flag.jpg');">
-      <h2 class="hero-text text-5xl sm:text-6xl md:text-7xl font-extrabold drop-shadow-lg">JHALAK '26</h2>
+      <h2 class="hero-text font-extrabold drop-shadow-lg">JHALAK '26</h2>
     </section>
 
     <!-- Houses Display -->
@@ -156,7 +166,7 @@
       const card = document.createElement('div');
       card.className = `house-card overflow-hidden rounded-xl shadow-md transition-all duration-300`;
       card.innerHTML = `
-        <div class="${h.color} h-3"></div>
+        <div class="bg-gray h-3"></div>
         <img src="${h.logo}" alt="${h.name} Logo" class="w-full h-40 object-contain mx-auto mt-2">
         <div class="p-4">
           <h3 class="text-xl font-bold mb-2">${h.name}</h3>
@@ -190,8 +200,6 @@
 
       if (programSelect.value === 'UG') {
         regInputSection.classList.remove('hidden');
-      } else if (programSelect.value === 'PG') {
-        regInputSection.classList.add('hidden');
       } else {
         regInputSection.classList.add('hidden');
       }
