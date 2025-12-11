@@ -1,168 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>House Calculator - Jhalak '26</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
-    /* HERO HEIGHT */
-    .hero-height {
-      height: 60vh;
+    /* Intro Screen */
+    #introScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 1.2s ease-out;
     }
 
-    /* HERO TEXT DESKTOP */
+    #mainContent {
+      opacity: 0;
+      transition: opacity 1s ease-out;
+    }
+
+    /* Hover Animations */
+    .house-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    /* Hero Section Heights */
+    .hero-height { height: 60vh; }
+
+    /* Hero Text Sizes & Styles */
     .hero-text {
       font-size: 4rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
     }
 
-    /* DESKTOP HERO IMAGE */
-    .hero-section {
-      background-image:
-        linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-        url('flag.jpg');
+    @media (max-width: 1024px) {
+      .hero-text { font-size: 3.5rem; }
     }
 
-    /* MOBILE HERO IMAGE FIX + SWITCH TO FLAG-MOBILE.JPG */
+    /* Mobile Fixes */
     @media (max-width: 640px) {
-      .hero-height {
-        height: 40vh !important;
-      }
-
-      .hero-text {
-        font-size: 2.2rem !important;
-      }
-
-      .hero-section {
-        background-image:
-          linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-          url('flag-mobile.jpg') !important;
-        background-size: contain !important;
-        background-repeat: no-repeat !important;
-        background-position: center !important;
-        background-color: black !important;
-      }
+      .hero-height { height: 40vh !important; }
+      .hero-text { font-size: 2.2rem !important; }
+      .top-title { font-size: 1.4rem !important; }
+      .calc-card { margin-top: -10px !important; padding: 1.5rem !important; }
     }
   </style>
 </head>
+<body class="bg-gray-100">
 
-<body class="bg-black text-white">
+  <!-- Intro Screen -->
+  <div id="introScreen">
+    <h1 class="text-white font-extrabold text-6xl sm:text-7xl md:text-8xl drop-shadow-lg">Jhalak'26</h1>
+  </div>
 
-  <!-- HERO SECTION -->
-  <section
-    class="hero-section hero-height flex items-center justify-center w-full bg-cover bg-center bg-no-repeat">
-    <h1 class="hero-text font-extrabold drop-shadow-xl tracking-wide text-white">
-      JHALAK '26
-    </h1>
-  </section>
+  <!-- Main Content -->
+  <div id="mainContent">
 
-  <!-- MAIN SECTION -->
-  <section class="w-full px-6 py-12 text-center">
-
-    <h2 class="text-3xl font-semibold mb-6">Find Your House</h2>
-
-    <!-- PG / UG DROPDOWN -->
-    <div class="max-w-md mx-auto bg-white text-black p-5 rounded-xl shadow-lg">
-      <label class="font-semibold block mb-2">Select Program</label>
-
-      <select id="programSelect"
-              class="w-full p-3 rounded-lg border outline-none">
-        <option value="">-- Choose --</option>
-        <option value="PG">PG</option>
-        <option value="UG">UG</option>
-      </select>
-
-      <!-- UG Departments (hidden for PG) -->
-      <div id="ugDeptBox" class="mt-5 hidden">
-        <label class="font-semibold block mb-2">Select Department</label>
-
-        <select id="ugDeptSelect"
-                class="w-full p-3 rounded-lg border outline-none">
-          <option value="">-- Select UG Dept --</option>
-          <option value="ET">Engineering & Technology</option>
-        </select>
+    <!-- Header -->
+    <header class="w-full bg-white shadow flex flex-col sm:flex-row items-center justify-between px-4 sm:px-8 py-4 gap-3 sm:gap-0">
+      <div class="flex items-center gap-3">
+        <img src="DSA.png" alt="DSA Logo" class="h-12 sm:h-16 object-contain" onerror="this.style.display='none'">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 top-title text-center">Directorate of Student Affairs</h1>
       </div>
+      <img src="SRM.png" alt="SRM Logo" class="h-12 sm:h-16 object-contain" onerror="this.style.display='none'">
+    </header>
 
-      <!-- Input for last 3 digits -->
-      <div id="digitsBox" class="mt-5 hidden">
-        <label class="font-semibold block mb-2">Enter Last 3 Digits</label>
-        <input id="digitInput"
-               type="number"
-               class="w-full p-3 rounded-lg border outline-none"
-               placeholder="Example: 456" />
+    <!-- HERO SECTION -->
+    <section class="relative w-full hero-height flex items-center justify-center text-white
+            bg-contain bg-center bg-no-repeat"
+            style="background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('flag.jpg');">
+      <h2 class="hero-text font-extrabold drop-shadow-lg">JHALAK '26</h2>
+    </section>
+
+    <!-- Houses Display -->
+    <div class="max-w-6xl mx-auto px-4 py-10">
+      <h2 class="text-2xl sm:text-3xl font-bold text-center mb-6">Houses</h2>
+      <div id="housesContainer" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Houses populated via JS -->
       </div>
-
-      <button onclick="calculateHouse()"
-              class="mt-6 w-full bg-black text-white font-semibold py-3 rounded-lg hover:bg-gray-800 transition">
-        Get My House
-      </button>
-
-      <p id="result" class="mt-6 text-xl font-bold"></p>
-      <img id="houseImage" class="mt-4 w-40 mx-auto hidden" />
     </div>
 
-  </section>
+    <!-- Calculator Card -->
+    <div class="max-w-2xl mx-auto px-4 pb-12">
+      <div class="bg-white shadow-xl rounded-2xl p-8 calc-card">
+
+        <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">House Calculator</h2>
+        <p class="text-center text-lg text-gray-600 mb-6">Find out which house you belong to</p>
+
+        <!-- Program Selector -->
+        <div class="mb-6 flex flex-col items-center space-y-3">
+          <label for="programSelect" class="text-lg font-semibold">Choose Program</label>
+          <select id="programSelect" class="text-lg max-w-md w-full px-4 py-2 border rounded-lg">
+            <option value="">-- Select Program --</option>
+            <option value="UG">UG</option>
+            <option value="PG">PG</option>
+          </select>
+        </div>
+
+        <!-- UG Registration Input -->
+        <div id="regInputSection" class="hidden mb-6 flex flex-col items-center space-y-3">
+          <label for="regNumber" class="text-lg font-semibold">Enter Registration Number (UG Engineering & Technology Only):</label>
+          <input id="regNumber" type="number" min="0" max="999" placeholder="last 3 digits of Registration Number e.g. 123"
+            class="text-lg max-w-md w-full text-center px-4 py-2 border rounded-lg">
+          <p id="errorMsg" class="text-red-600 text-sm hidden"></p>
+        </div>
+
+        <!-- Calculate Button -->
+        <div class="flex justify-center">
+          <button id="calculateBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg text-lg">
+            Get Your House
+          </button>
+        </div>
+
+        <!-- Result -->
+        <div id="resultSection" class="hidden mt-6">
+          <div id="resultCard" class="border-2 rounded-xl p-8 text-center shadow-2xl">
+            <img id="resultLogo" class="w-40 h-40 object-contain mx-auto mb-4" src="" alt="House Logo">
+            <p id="resultName" class="text-5xl font-bold text-primary"></p>
+          </div>
+          <button id="resetBtn" class="mt-4 w-full py-3 border rounded-lg text-lg font-semibold hover:bg-gray-100">
+            Calculate Again
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 
   <script>
-    const pgHouse = "Brahmos";
-
-    const houses = {
-      0: { name: "Trishul", img: "trishul.png" },
-      1: { name: "Agni", img: "agni.png" },
-      2: { name: "Aakash", img: "aakash.png" },
-      3: { name: "Prithvi", img: "prithvi.png" }
+    // Intro Animation
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById('introScreen').style.opacity = 0;
+        document.getElementById('mainContent').style.opacity = 1;
+        setTimeout(() => {
+          document.getElementById('introScreen').style.display = 'none';
+        }, 1200);
+      }, 1500);
     };
 
-    document.getElementById("programSelect").addEventListener("change", function () {
-      const pgSelected = this.value === "PG";
+    // House Data
+    const houses = [
+      { name: 'Trishul', color: 'bg-red-500', logo: 'Trishul.png', description: ['Engineering and Technology'] },
+      { name: 'Agni', color: 'bg-blue-500', logo: 'Agni.png', description: ['Engineering and Technology'] },
+      { name: 'Aakash', color: 'bg-green-500', logo: 'Aakash.jpg', description: ['Engineering and Technology'] },
+      { name: 'Prithvi', color: 'bg-indigo-500', logo: 'Prithvi.png', description: ['Engineering and Technology'] },
+      { name: 'Brahmos', color: 'bg-purple-500', logo: 'Brahmos.png', description: ['Faculty of Management', 'All PG courses'] },
+      { name: 'Astra', color: 'bg-yellow-500', logo: 'Astra.jpg', description: ['School of Law', 'Faculty of Science and Humanities'] },
+      { name: 'Nag', color: 'bg-orange-500', logo: 'Nag.png', description: ['School of Architecture and Interior Design', 'Institute of Hotel Management'] },
+      { name: 'Shaurya', color: 'bg-pink-500', logo: 'Shaurya.png', description: ['Medical and Health Sciences'] },
+    ];
 
-      document.getElementById("ugDeptBox").classList.toggle("hidden", pgSelected);
-      document.getElementById("digitsBox").classList.toggle("hidden", false);
+    const housesContainer = document.getElementById('housesContainer');
 
-      document.getElementById("result").textContent = "";
-      document.getElementById("houseImage").classList.add("hidden");
+    // Render all houses with images
+    houses.forEach(h => {
+      const card = document.createElement('div');
+      card.className = `house-card overflow-hidden rounded-xl shadow-md transition-all duration-300`;
+      card.innerHTML = `
+        <div class="bg-gray h-3"></div>
+        <img src="${h.logo}" alt="${h.name} Logo" class="w-full h-40 object-contain mx-auto mt-2">
+        <div class="p-4">
+          <h3 class="text-xl font-bold mb-2">${h.name}</h3>
+          <ul class="text-sm text-gray-600 space-y-1">
+            ${h.description.map(d => `<li>• ${d}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+      housesContainer.appendChild(card);
     });
 
-    function calculateHouse() {
-      const program = document.getElementById("programSelect").value;
-      const dept = document.getElementById("ugDeptSelect").value;
-      const digits = document.getElementById("digitInput").value;
-      const result = document.getElementById("result");
-      const imgBox = document.getElementById("houseImage");
+    // Calculator Logic
+    const programSelect = document.getElementById('programSelect');
+    const regInputSection = document.getElementById('regInputSection');
+    const regInput = document.getElementById('regNumber');
+    const calculateBtn = document.getElementById('calculateBtn');
+    const resultSection = document.getElementById('resultSection');
+    const resultLogo = document.getElementById('resultLogo');
+    const resultName = document.getElementById('resultName');
+    const resetBtn = document.getElementById('resetBtn');
+    const errorMsg = document.getElementById('errorMsg');
 
-      result.textContent = "";
-      imgBox.classList.add("hidden");
+    let assignedHouse = null;
 
-      if (!program) {
-        result.textContent = "Please select a program.";
-        return;
+    programSelect.addEventListener('change', () => {
+      // Clear previous results
+      resultSection.classList.add('hidden');
+      assignedHouse = null;
+      regInput.value = '';
+      errorMsg.classList.add('hidden');
+
+      if (programSelect.value === 'UG') {
+        regInputSection.classList.remove('hidden');
+      } else {
+        regInputSection.classList.add('hidden');
       }
+    });
 
-      if (!digits) {
-        result.textContent = "Enter the last 3 digits.";
-        return;
-      }
-
-      if (program === "PG") {
-        result.textContent = "Your House: " + pgHouse;
-        imgBox.src = "brahmos.png";
-        imgBox.classList.remove("hidden");
-        return;
-      }
-
-      if (program === "UG" && !dept) {
-        result.textContent = "Please select your UG department.";
-        return;
-      }
-
-      const sum = digits.split("").reduce((a, b) => a + Number(b), 0);
+    function calculateHouse(number) {
+      const digits = number.split('').map(Number);
+      const sum = digits.reduce((a,b) => a+b, 0);
       const remainder = sum % 4;
-
-      result.textContent = "Your House: " + houses[remainder].name;
-      imgBox.src = houses[remainder].img;
-      imgBox.classList.remove("hidden");
+      const ugHouses = ['Trishul', 'Agni', 'Aakash', 'Prithvi'];
+      return houses.find(h => h.name === ugHouses[remainder]);
     }
+
+    function showResult(house) {
+      resultLogo.src = house.logo;
+      resultName.textContent = house.name;
+      resultSection.classList.remove('hidden');
+    }
+
+    calculateBtn.addEventListener('click', () => {
+      errorMsg.classList.add('hidden');
+
+      if (programSelect.value === '') {
+        alert('Please select a program');
+        return;
+      }
+
+      if (programSelect.value === 'UG') {
+        const reg = regInput.value.trim();
+        if (reg.length !== 3 || !/^\d+$/.test(reg)) {
+          errorMsg.textContent = 'Please enter exactly 3 digits';
+          errorMsg.classList.remove('hidden');
+          return;
+        }
+        assignedHouse = calculateHouse(reg);
+      } else if (programSelect.value === 'PG') {
+        assignedHouse = houses.find(h => h.name === 'Brahmos');
+      }
+
+      if (assignedHouse) {
+        showResult(assignedHouse);
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      programSelect.value = '';
+      regInput.value = '';
+      regInputSection.classList.add('hidden');
+      resultSection.classList.add('hidden');
+      assignedHouse = null;
+    });
   </script>
 
 </body>
